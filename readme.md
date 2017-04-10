@@ -1,7 +1,8 @@
+# 🚀 AWS Deployatron
+
 ### REQUIREMENTS
 
 * Node 7.8+
-
 
 ### USAGE
 
@@ -16,5 +17,5 @@ Setup the following env vars:
 And call the binary `aws-deployatron`
 
 ### TODO
-* Transform code using Babel to support older Node versions
-* Allow parameters to be passed as arguments instead of only supporting env vars.
+* Transform code using Babel to support older Node versions;
+* Allow parameters to be passed as arguments using `commander` library.

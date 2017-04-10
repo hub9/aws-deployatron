@@ -41,6 +41,4 @@ function deploy(clientOptions, bucket, srcDir, srcGlob, destDir, sequential = fa
     .then(deployFiles);
 }
 
-module.exports = {
-  deploy,
-};
+module.exports = deploy;

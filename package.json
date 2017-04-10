@@ -1,6 +1,6 @@
 {
   "name": "aws-deployatron",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "AWS static file deploy helper",
   "repository": {
     "type": "git",
@@ -20,9 +20,9 @@
     "url": "https://github.com/hub9co/aws-deployatron/issues"
   },
   "homepage": "https://github.com/hub9co/aws-deployatron#readme",
-  "main": "index.js",
+  "main": "src/index.js",
   "bin": {
-    "aws-deployatron": "index.js"
+    "aws-deployatron": "src/index.js"
   },
   "dependencies": {
     "aws-sdk": "^2.40.0",

@@ -147,8 +147,6 @@ class S3File {
 
     const response = await upload.promise();
 
-    this.logVerbose(`Complete: "${response.Location}"`);
-
     return params.Key; // File destination
   }
 
@@ -163,7 +161,9 @@ class S3File {
     }
 
     // Upload the file
-    return this.upload(s3Client, destDir);
+    await this.upload(s3Client, destDir);
+
+    this.logInfo('Done');
   }
 }
 

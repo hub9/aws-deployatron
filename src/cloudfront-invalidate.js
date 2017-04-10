@@ -37,6 +37,4 @@ function invalidate(clientOptions, distributionId, paths) {
     });
 }
 
-module.exports = {
-  invalidate,
-};
+module.exports = invalidate;
