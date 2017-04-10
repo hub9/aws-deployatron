@@ -1,6 +1,6 @@
 {
   "name": "aws-deployatron",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "AWS static file deploy helper",
   "repository": {
     "type": "git",
