@@ -68,9 +68,10 @@ class S3File {
         })
         .on('end', () => {
           this.data = Buffer.concat(chunks);
-          this.hash = md5.digest('base64');
-          logLoad.verbose(this.relativePath, `Loaded ${this.data.length}bytes`);
-          logLoad.verbose(this.relativePath, `Hash ${this.hash}`);
+          const base64 = md5.digest('base64');
+          const hex = new Buffer(base64, 'base64').toString('hex');
+          this.hash = { base64, hex };
+          logLoad.verbose(this.relativePath, `Hash ${this.hash.hex} | ${this.data.length} bytes`);
           resolve();
         });
     });
@@ -88,7 +89,7 @@ class S3File {
   /** Check if file is already synced */
   async isSynced(s3Client, destDir) {
     const params = this.buildParams(destDir, {
-      IfNoneMatch: this.hash,
+      IfNoneMatch: this.hash.hex,
       // IfUnmodifiedSince: this.stats.mtime,
     });
 
@@ -96,7 +97,7 @@ class S3File {
     const request = s3Client.headObject(params);
 
     return request.promise()
-      .then(() => {
+      .then((res) => {
         logSync.verbose(this.relativePath, 'Sync: Needs upload');
         logSync.finish();
         return false;
@@ -129,41 +130,32 @@ class S3File {
     const params = this.buildParams(destDir, {
       ACL: 'public-read',
       Body: bufferStream,
-      ContentMD5: this.hash,
+      ContentMD5: this.hash.base64,
       ContentType: this.contentType,
       ContentEncoding: this.encoding,
-      Metadata: {
-        ETag: this.hash,
-      },
     });
 
     // Upload the file to s3.
     const upload = s3Client.upload(params);
 
-    // upload.on('httpUploadProgress', (progress) => {
-    //   const progressFloat = (progress.loaded / progress.total);
-    //   this.log.info('Upload', `${(progressFloat * 100).toFixed(2)}%`);
-    // });
-
     const response = await upload.promise();
 
-    return params.Key; // File destination
+    return response.Key;
   }
 
   async sync(s3Client, destDir) {
-    await this.load();
+    let key;
 
-    // Check if file already on server -> throws if already there
+    await this.load();
     const isSynced = await this.isSynced(s3Client, destDir);
 
-    if (isSynced) {
-      return undefined;
+    // Upload the file
+    if (!isSynced) {
+      key = await this.upload(s3Client, destDir);
     }
 
-    // Upload the file
-    await this.upload(s3Client, destDir);
-
     this.logInfo('Done');
+    return key;
   }
 }
 

@@ -38,7 +38,8 @@ function deploy(clientOptions, bucket, srcDir, srcGlob, destDir, sequential = fa
     : deployFilesParallel(fileHandler);
 
   return glob(pattern, { nodir: true, nosort: true })
-    .then(deployFiles);
+    .then(deployFiles)
+    .then(uploadedFiles => uploadedFiles.filter(key => key != null));
 }
 
 module.exports = deploy;
