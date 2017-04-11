@@ -95,8 +95,6 @@ class S3File {
     const logSync = this.log.newItem('Sync');
     const request = s3Client.headObject(params);
 
-    logSync.verbose(this.relativePath, `Sync:\n${JSON.stringify(request, null, 2)}`);
-
     return request.promise()
       .then(() => {
         logSync.verbose(this.relativePath, 'Sync: Needs upload');
@@ -141,8 +139,6 @@ class S3File {
 
     // Upload the file to s3.
     const upload = s3Client.upload(params);
-
-    logSync.verbose(this.relativePath, `Upload:\n${JSON.stringify(upload, null, 2)}`);
 
     // upload.on('httpUploadProgress', (progress) => {
     //   const progressFloat = (progress.loaded / progress.total);
