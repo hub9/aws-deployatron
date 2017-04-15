@@ -26,7 +26,7 @@ function deploy(clientOptions, bucket, srcDir, srcGlob, destDir, sequential = fa
   npmlog.heading = 'S3 Upload';
 
   const s3Client = new AWS.S3(clientOptions);
-  const pattern = path.join(srcDir, srcGlob);
+  const pattern = path.resolve(srcDir, srcGlob);
 
   const fileHandler = (filePath) => {
     const file = new S3File(bucket, filePath, srcDir);

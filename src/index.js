@@ -43,11 +43,11 @@ async function deploy(options) {
 
 program
   .version(packageInfo.version)
-  .option('-i', '--inputDir <path>', 'Input files')
-  .option('-o', '--publicUrl [url]', 'Target directory on S3 bucket (or PUBLIC_URL env)')
-  .option('-s', '--s3Bucket [name]', 'S3 Bucket name  (or AWS_S3_BUCKER env)')
-  .option('-c', '--cloudfrontId [id]', 'CloudFront Distribution ID (or AWS_CLOUDFRONT_ID env)')
-  .option('-v', '--verbose', 'Output more detailed log')
+  .option('-i, --inputDir <path>', 'Input files')
+  .option('-p, --publicUrl [url]', 'Target directory on S3 bucket (or PUBLIC_URL env)')
+  .option('-b, --s3Bucket [name]', 'S3 Bucket name  (or AWS_S3_BUCKER env)')
+  .option('-c, --cloudfrontId [id]', 'CloudFront Distribution ID (or AWS_CLOUDFRONT_ID env)')
+  .option('-v, --verbose', 'Output more detailed log')
   .parse(process.argv);
 
 deploy(program);
