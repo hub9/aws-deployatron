@@ -1,11 +1,12 @@
 {
   "name": "aws-deployatron",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "AWS static file deploy helper",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/hub9co/aws-deployatron.git"
-  },
+  "author": "Rômulo Ruas (romulof)",
+  "license": "MIT",
+  "homepage": "https://github.com/hub9/aws-deployatron",
+  "repository": "https://github.com/hub9/aws-deployatron.git",
+  "bugs": "https://github.com/hub9/aws-deployatron/issues",
   "keywords": [
     "aws",
     "s3",
@@ -14,23 +15,20 @@
     "deploy",
     "static"
   ],
-  "author": "Rômulo Fernandes Ruas da Costa",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/hub9co/aws-deployatron/issues"
+  "engines": {
+    "node": ">=8.9"
   },
-  "homepage": "https://github.com/hub9co/aws-deployatron#readme",
   "main": "src/index.js",
   "bin": {
     "aws-deployatron": "src/index.js"
   },
   "dependencies": {
-    "aws-sdk": "^2.41.0",
-    "commander": "^2.9.0",
-    "envalid": "^2.4.2",
-    "glob-promise": "^3.1.0",
-    "mime": "^1.3.4",
+    "aws-sdk": "^2.193.0",
+    "commander": "^2.14.1",
+    "envalid": "^4.1.2",
+    "glob-promise": "^3.3.0",
+    "mime-types": "^2.1.17",
     "node-zopfli": "^2.0.2",
-    "npmlog": "^4.0.2"
+    "npmlog": "^4.1.2"
   }
 }
