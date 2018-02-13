@@ -1,5 +1,5 @@
 {
-  "name": "aws-deployatron",
+  "name": "@hub9/aws-deployatron",
   "version": "1.3.0",
   "description": "AWS static file deploy helper",
   "author": "Rômulo Ruas (romulof)",
