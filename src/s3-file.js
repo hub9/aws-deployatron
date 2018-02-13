@@ -2,10 +2,9 @@ const path = require('path');
 const fs = require('fs');
 const crypto = require('crypto');
 const stream = require('stream');
-const mime = require('mime');
+const mime = require('mime-types');
 const zopfli = require('node-zopfli');
 const npmlog = require('npmlog');
-
 
 const COMPRESSION_THRESHOLD = 1024;
 
@@ -15,21 +14,15 @@ class S3File {
     this.path = filePath;
     this.name = path.basename(filePath);
     this.relativePath = path.relative(srcDir, filePath);
+    this.contentType = mime.contentType(this.name);
     this.log = npmlog.newGroup(this.relativePath);
     this.logInfo = this.log.info.bind(this.log, this.toString());
     this.logVerbose = this.log.verbose.bind(this.log, this.toString());
-    this.setContentType();
+    this.logInfo(this.contentType);
   }
 
   toString() {
     return this.relativePath;
-  }
-
-  setContentType() {
-    const mimeType = mime.lookup(this.path).replace('-', '');
-    const charset = mime.charsets.lookup(mimeType, null);
-    this.contentType = charset ? `${mimeType}; charset=${charset}` : mimeType;
-    this.logInfo(this.contentType);
   }
 
   isMedia() {
@@ -37,9 +30,13 @@ class S3File {
       .some(type => this.contentType.startsWith(type));
   }
 
+  isSVG() {
+    return this.contentType.startsWith('image/svg+xml');
+  }
+
   allowCompression() {
     return this.stats.size >= COMPRESSION_THRESHOLD
-      && !this.isMedia();
+      && (this.isSVG() || !this.isMedia());
   }
 
   load() {
