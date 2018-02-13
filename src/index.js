@@ -33,7 +33,10 @@ async function deploy(options) {
 
     // CloudFront Invalidate configuration
     const distributionId = options.cloudfrontId || env.AWS_CLOUDFRONT_ID;
-    await CloudfrontInvalidate(clientOptions, distributionId, uploadedFiles);
+
+    if (distributionId) {
+      await CloudfrontInvalidate(clientOptions, distributionId, uploadedFiles);
+    }
   } catch (error) {
     npmlog.disableProgress();
     npmlog.error(null, error);
